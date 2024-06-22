@@ -17,7 +17,7 @@ class Jugador(db.Model):
 class TipoPartida (db.Model):
     __tablename__='tipos_partida'
     id = db.Column(db.Integer, primary_key=True)
-    cant_jugadores = db.Column (db.Integer(255), nullable=False)
+    cant_jugadores = db.Column (db.Integer, nullable=False)
     apodo = db.Column(db.Boolean, default = False)
     max_puntos = db.Column (db.Integer, nullable=False)
     fecha_creacion = db.Column(db.DateTime, default=datetime.datetime.now())
