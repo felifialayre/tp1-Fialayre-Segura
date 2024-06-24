@@ -2,6 +2,7 @@ import logging
 from flask import Flask, request, jsonify
 from models import db, Jugador, TipoPartida, Partida
 from sqlalchemy.engine.url import URL
+from sqlalchemy import func
 
 app = Flask(__name__)
 port = 5000
@@ -12,8 +13,8 @@ logging.basicConfig(level=logging.DEBUG)
 # Define the database connection details
 db_config = {
     'drivername': 'postgresql',
-    'username': 'juanasegura',
-    'password': 'juanasegura',
+    'username': 'felipefialayre',
+    'password': 'felipefialayre',
     'host': 'localhost',
     'port': '5432',
     'database': 'falta_envido'
@@ -30,6 +31,21 @@ db.init_app(app)
 @app.route("/")
 def hello():
     return 'hello'
+
+@app.route('/home')
+def return_players():
+    contenido = []
+    count_jugadores = db.session.query(func.count(Jugador.id)).scalar()
+    for i in range (1, count_jugadores+1):
+        current = db.session.query(Jugador).filter_by(id=i).first()
+        current_dic = {
+            'id' : current.id,
+            'nombre' : current.nombre,
+            'avatar' : current.avatar,
+            'apodo' : current.apodo
+        }
+        contenido.append(current_dic)
+    return contenido
 
 if __name__ == '__main__':
     logging.debug('Starting server...')
