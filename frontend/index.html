@@ -26,6 +26,21 @@
         <button>Añadir Jugador</button>
     </footer>
     <main></main>
+    <script>
+
+        function parse_data(data){
+            console.log(data)
+        }
+
+        function handle_error(){
+            console.log("bot")
+        }
+
+        fetch("http://localhost:5000/home")
+            .then((res) => res.json())
+            .then(parse_data)
+            .catch(handle_error)
+    </script>
 
 </body>
 </html>
