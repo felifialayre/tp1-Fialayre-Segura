@@ -3,24 +3,26 @@ from flask import Flask, request, jsonify
 from models import db, Jugador, TipoPartida, Partida
 from sqlalchemy.engine.url import URL
 from sqlalchemy import func
+from flask_cors import CORS
 
 app = Flask(__name__)
 port = 5000
+CORS(app)
 
 # Configurar el logging
 logging.basicConfig(level=logging.DEBUG)
 
-# Define the database connection details
+# Detalles de la conexion
 db_config = {
     'drivername': 'postgresql',
-    'username': 'felipefialayre',
-    'password': 'felipefialayre',
+    'username': 'juanasegura',
+    'password': 'juanasegura',
     'host': 'localhost',
     'port': '5432',
     'database': 'falta_envido'
 }
 
-# Create the database URL
+# Crea URL de la DB
 db_url = URL.create(**db_config)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = db_url
