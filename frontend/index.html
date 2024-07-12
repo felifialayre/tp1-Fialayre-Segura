@@ -18,10 +18,9 @@
 
     </nav>
     <main>
-        <div class="contenedor">
-            <div class="personajes" id="personajes">
-            </div>
+        <div class="contenedor" id="personajes">
         </div>
+
 
     </main>
     <footer>
@@ -43,7 +42,7 @@
 
             const imagen = document.createElement("img");
             imagen.setAttribute("class", "imagenes");
-            imagen.setAttribute("src", `${data[i].avatar}.png`);
+            imagen.setAttribute("src", `img/${data[i].avatar}.png`);
 
             const cuerpo = document.createElement("div");
             cuerpo.setAttribute("class", "cuerpo");
