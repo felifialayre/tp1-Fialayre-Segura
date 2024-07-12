@@ -18,28 +18,54 @@
 
     </nav>
     <main>
-        <ul>
-            
-        </ul>
+        <div class="contenedor">
+            <div class="personajes" id="personajes">
+            </div>
+        </div>
+
     </main>
     <footer>
         <button>Añadir Jugador</button>
     </footer>
     <main></main>
-    <script>
 
-        function parse_data(data){
-            console.log(data)
-        }
+<script>    
+    function parse_data(data){
+        console.log(data);
+        let i = 0;
+        const contenedor = document.getElementById("personajes");
+        for(i=0 ; i < data.length ; i++){
+            const item = document.createElement("div");
+            
+            const tarjeta = document.createElement("a");
+            tarjeta.setAttribute("class", "");
+            tarjeta.setAttribute("href", `/jugador?id=${data[i].id}`);
 
-        function handle_error(){
-            console.log("bot")
-        }
+            const imagen = document.createElement("img");
+            imagen.setAttribute("class", "imagenes");
+            imagen.setAttribute("src", `${data[i].avatar}.png`);
+
+            const cuerpo = document.createElement("div");
+            cuerpo.setAttribute("class", "cuerpo");
+
+            cuerpo.append(content[index].name);
+            cuerpo.append(imagen);
+            tarjeta.append(cuerpo);
+            item.append(tarjeta);
+
+            contenedor.append(item);
+        }   
+    }
+
+    function handle_error(){
+        console.log("bot")
+    }
 
         fetch("http://localhost:5000/home")
         .then((res) => res.json())
         .then(parse_data)
         .catch(handle_error)
     </script>
+
 </body>
 </html>
