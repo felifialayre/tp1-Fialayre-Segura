@@ -49,7 +49,7 @@ def return_players():
         contenido.append(current_dic)
     return contenido
 
-@app.route('/players/<player_id>')
+@app.route('/player/<player_id>')
 def return_player_by_id(player_id):
     jugador = db.session.query(Jugador).filter_by(id=player_id).first()
     return {

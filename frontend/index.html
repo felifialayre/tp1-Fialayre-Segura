@@ -27,7 +27,7 @@
 
     </main>
     <footer>
-        <button>Añadir Jugador</button>
+        <a href="/create">Añadir Jugador</a>
     </footer>
     <main></main>
 
@@ -40,7 +40,7 @@
             
             const tarjeta = document.createElement("a");
             tarjeta.setAttribute("class", "tarjeta");
-            tarjeta.setAttribute("href", `/jugador?id=${data[i].id}`);
+            tarjeta.setAttribute("href", `/player?id=${data[i].id}`);
 
             const imagen = document.createElement("img");
             imagen.setAttribute("class", "imagenes");
