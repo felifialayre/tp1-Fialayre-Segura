@@ -12,11 +12,14 @@
 <body>
     <header>
         <h1>🗡️Falta Envido🗡️</h1>
-        <h2>Tu página favorita para jugar al truco</h2>
+        <h3>Tu página favorita para jugar al truco</h3>
     </header>
     <nav>
-
+       <a href="">Estadícas</a>
+       <a href="">Contador de Puntos</a>
+       <a href="">Reglas</a>
     </nav>
+    <p><h2>✦•······················•⚔•······················•✦ Jugadores ✦•······················•⚔•······················•✦</h2></p>
     <main>
         <div class="contenedor" id="personajes">
         </div>
@@ -34,25 +37,29 @@
         let i = 0;
         const contenedor = document.getElementById("personajes");
         for(i=0 ; i < data.length ; i++){
-            const item = document.createElement("div");
             
             const tarjeta = document.createElement("a");
-            tarjeta.setAttribute("class", "");
+            tarjeta.setAttribute("class", "tarjeta");
             tarjeta.setAttribute("href", `/jugador?id=${data[i].id}`);
 
             const imagen = document.createElement("img");
             imagen.setAttribute("class", "imagenes");
             imagen.setAttribute("src", `img/${data[i].avatar}.png`);
 
+            const boton_eliminar = document.createElement("button");
+            boton_eliminar.setAttribute("class", "eliminar");
+            boton_eliminar.textContent = "Eliminar";
+
             const cuerpo = document.createElement("div");
             cuerpo.setAttribute("class", "cuerpo");
-
-            cuerpo.append(content[index].name);
             cuerpo.append(imagen);
+            cuerpo.append(data[i].nombre);
+            cuerpo.append(boton_eliminar);
+            
             tarjeta.append(cuerpo);
-            item.append(tarjeta);
 
-            contenedor.append(item);
+            contenedor.append(tarjeta);
+
         }   
     }
 
