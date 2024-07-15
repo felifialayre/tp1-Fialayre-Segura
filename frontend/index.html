@@ -15,6 +15,7 @@
         <h3>Tu página favorita para jugar al truco</h3>
     </header>
     <nav>
+       <a href="http://localhost:8000/">Pagina principal</a>
        <a href="">Estadícas</a>
        <a href="">Contador de Puntos</a>
        <a href="">Reglas</a>
@@ -40,7 +41,7 @@
             
             const tarjeta = document.createElement("a");
             tarjeta.setAttribute("class", "tarjeta");
-            tarjeta.setAttribute("href", `/jugador?id=${data[i].id}`);
+            tarjeta.setAttribute("href", `/players?id=${data[i].id}`);
 
             const imagen = document.createElement("img");
             imagen.setAttribute("class", "imagenes");
