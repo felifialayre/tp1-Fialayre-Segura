@@ -9,8 +9,8 @@ class Jugador(db.Model):
     nombre = db.Column(db.String(255), nullable=False)
     apodo = db.Column(db.String(255), nullable=False)
     edad = db.Column (db.Integer, nullable=False)
-    ganadas = db.Column (db.Integer, nullable=False)
-    perdidas = db.Column (db.Integer, nullable=False)
+    ganadas = db.Column(db.Integer, nullable=False, default=0)
+    perdidas = db.Column(db.Integer, nullable=False, default=0)
     avatar = db.Column (db.Integer, default=1)
     fecha_creacion = db.Column (db.DateTime, default=datetime.datetime.now())
 
