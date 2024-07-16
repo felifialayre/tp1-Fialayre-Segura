@@ -1,4 +1,5 @@
 import logging
+import datetime
 from flask import Flask, request, jsonify
 from models import db, Jugador, TipoPartida, Partida
 from sqlalchemy.engine.url import URL
@@ -48,7 +49,46 @@ def return_players():
         contenido.append(jugador_dic)
     return jsonify(contenido)
 
-@app.route('/players/<player_id>')
+@app.route("/home", methods=["POST"])
+def create_player():
+    try:
+        data = request.json
+        nombre = data.get('nombre')
+        apodo = data.get('apodo')
+        edad = data.get('edad')
+        avatar = data.get('avatar')
+        
+        nuevo_jugador = Jugador(
+            nombre=nombre, 
+            apodo=apodo, 
+            edad=edad, 
+            ganadas=0, 
+            perdidas=0, 
+            avatar=avatar
+        )
+        db.session.add(nuevo_jugador)
+        db.session.commit()
+
+        return jsonify({
+            'jugador': {
+                'id': nuevo_jugador.id,
+                'nombre': nuevo_jugador.nombre,
+                'apodo': nuevo_jugador.apodo,
+                'edad': nuevo_jugador.edad,
+                'ganadas': nuevo_jugador.ganadas,
+                'perdidas': nuevo_jugador.perdidas,
+                'avatar': nuevo_jugador.avatar,
+                'fecha_creacion': nuevo_jugador.fecha_creacion
+            }
+        }), 201
+
+    except Exception as e:
+        logging.error(f"Error creating player: {e}")
+        return jsonify({'message': f'No se pudo crear el jugador: {e}'}), 500
+
+
+
+@app.route('/player/<player_id>')
 def return_player_by_id(player_id):
     jugador = db.session.query(Jugador).filter_by(id=player_id).first()
     return {
