@@ -15,7 +15,6 @@
         <h3>Tu página favorita para jugar al truco</h3>
     </header>
     <nav>
-       <a href="http://localhost:8000/">Pagina principal</a>
        <a href="">Estadícas</a>
        <a href="">Contador de Puntos</a>
        <a href="">Reglas</a>
@@ -47,15 +46,10 @@
             imagen.setAttribute("class", "imagenes");
             imagen.setAttribute("src", `img/${data[i].avatar}.png`);
 
-            const boton_eliminar = document.createElement("button");
-            boton_eliminar.setAttribute("class", "eliminar");
-            boton_eliminar.textContent = "Eliminar";
-
             const cuerpo = document.createElement("div");
             cuerpo.setAttribute("class", "cuerpo");
             cuerpo.append(imagen);
             cuerpo.append(data[i].nombre);
-            cuerpo.append(boton_eliminar);
             
             tarjeta.append(cuerpo);
 

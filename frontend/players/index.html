@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lilita+One&display=swap" rel="stylesheet">
+    <title>Falta Envido</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>🗡️Falta Envido🗡️</h1>
+        <h3>Tu página favorita para jugar al truco</h3>
+    </header>
+    <nav>
+       <a href="">Estadícas</a>
+       <a href="">Contador de Puntos</a>
+       <a href="">Reglas</a>
+    </nav>
+    <p></p>
+    <main>
+        <div class="contenedor">
+            <div class="tarjeta" id="tarjeta">
+                <div class="nombre" id="carta">
+                    <img class="imagenes" id="imagen">
+                </div>
+                <div class="" id="cuerpo">
+                    <p id="apodo"></p>
+                    <ul id="lista">
+
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </main>
+    <footer>
+        <a href="../" class="volver">Pagina Principal</a>
+        <a href="edit/" id="editar">Editar</a>
+        <button class="button" id="eliminar" onclick="eliminar()">Eliminar</button>
+    </footer>
+
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const id = params.get("id");
+
+        if (id === null) {
+            window.location.href = "/";
+        }
+
+        function parse_data(data){
+            console.log(data)
+            const tarjeta = document.getElementById("tarjeta");
+            const carta = document.getElementById("carta");
+
+            const imagen = document.getElementById("imagen");
+            imagen.setAttribute("src", `../img/${data.avatar}.png`);
+
+            const cuerpo = document.getElementById("cuerpo");
+            cuerpo.setAttribute("class", "cuerpo");
+            const apodo = document.getElementById("apodo")
+            apodo.append(data.apodo);
+            
+            const edit = document.getElementById("editar")
+            edit.setAttribute("href", `/edit/?id=${data.id}`)
+            
+            const winrate = parseInt((((data.ganadas * 100) / (data.ganadas + data.perdidas))))
+            const res_dict = {
+                "Edad" : data.edad,
+                "Ganadas" : data.ganadas,
+                "Perdidas" : data.perdidas,
+                "Porcentaje de ganadas" : winrate + "%"
+            };
+            
+            
+            const list = document.getElementById("lista")
+
+            for (const i in res_dict) {
+                const current = document.createElement("li");
+                current.innerText =`${i} : ${res_dict[i]}`;
+                list.append(current);
+            }
+
+            carta.append(imagen);
+            carta.append(`${data.nombre}`);
+
+            tarjeta.append(carta);
+            tarjeta.append(cuerpo);
+            
+            
+
+        }
+
+        function handle_error(){
+            console.log("bot");
+        }
+
+        fetch(`http://localhost:5000/players/${id}`)
+            .then((res) => res.json())
+            .then(parse_data)
+            .catch(handle_error)
+
+        function eliminar(){
+            const conf = confirm(`Seguro que deseas eliminar al jugador?`);
+            if (!conf){
+                return;
+            }
+            fetch(`http://localhost:5000/players/${id}`, {method: "DELETE"})
+                .then((res) => res.json())
+                .then(eliminar_jugador)
+                .catch(handle_error)
+            
+        }
+
+        function eliminar_jugador(data){
+            if (data.message){
+                alert("Jugador eliminado correctamente");
+                window.location.href = "/";
+            }
+            else{
+                alert("Ocurrio un error eliminando al jugador")
+            }
+        }
+
+    </script>

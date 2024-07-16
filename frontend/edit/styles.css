@@ -1,0 +1,198 @@
+body{
+    position: relative;
+    min-height: 100vh;
+    background-color: rgb(150, 213, 152);
+    margin: 0;
+    padding-bottom: 4rem;
+}
+
+header{
+    background-color: rgba(228, 255, 255, 0.244);
+    border-radius: 1rem;
+    margin: 21px;
+}
+
+nav{
+    background-color: #1b4515ad;
+    text-align: center;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+nav a{
+    font-family: "Lilita One", sans-serif;
+    font-weight: 100;
+    font-size: 2rem;
+    text-align: center;
+    font-style: normal;
+    color: #dcfde9;
+    margin: 10px;
+    border-radius: 1rem;
+}
+footer{
+    background-color: rgba(31, 72, 18, 0.49);
+    text-align: center;
+    position: fixed;
+    justify-content: center;
+    position: absolute;
+    padding: 10px;
+    bottom:0;
+    width: 100%;
+    height: 4rem; 
+}
+
+h1{
+    font-family: "Lilita One", sans-serif;
+    font-weight: 400;
+    font-size: 4rem;
+    text-align: center;
+    font-style: normal;
+    text-transform: uppercase;
+    color: #ffffff;
+    margin-bottom: 0%;
+}
+
+
+h2{
+    font-family: "Lilita One", sans-serif;
+    font-weight: 400;
+    font-size: 2.8rem;
+    text-align: center;
+    font-style: normal;
+    color: #3e7036;
+    margin: 0%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+
+h3{
+    font-family: "Lilita One", sans-serif;
+    font-weight: 400;
+    font-size: 2rem;
+    text-align: center;
+    font-style: normal;
+    color: #14430d;
+    margin-top: 0%;
+    margin-bottom: 0%;
+}
+
+::placeholder {
+    color: #313f3172;
+}
+
+label{
+    font-family: "Lilita One", sans-serif;
+    font-weight: 200;
+    font-size: 2rem;
+    text-align: center;
+    font-style: normal;
+    color: #173f10b4;
+    margin-top: 10px;
+    margin-bottom: 0px;
+    padding: 10px;
+}
+
+input{
+    font-family: "Lilita One", sans-serif;
+    font-weight: 200;
+    font-size: 1.9rem;
+    text-align: center;
+    font-style: normal;
+    color: #3f631fb4;
+    background-color: #d4ffcf;
+    margin-top: 10px;
+    margin-bottom: 0px;
+    padding: 10px;
+    border-radius: 1rem;
+}
+button[type="submit"] {
+    font-family: "Lilita One", sans-serif;
+    font-weight: 200;
+    font-size: 1.7rem;
+    text-align: center;
+    font-style: normal;
+    color: #c1ce15;
+    background-color: #0c3007;
+    padding: 15px 40px;
+    margin-inline: 700px;
+    border-radius: 2rem;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+    background-color: #173f10b4; /* Cambio de color al pasar el mouse */
+}
+.tarjeta {
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.313);
+    padding: 20px;
+    margin: 30px;
+    margin-top: 0%;
+    border-radius: 1rem;
+    text-decoration: none;
+    color: inherit;
+    display: grid;
+    grid-template-rows: 1fr 2fr 1fr;
+}
+
+.imagenes {
+    width: 150px;
+    background-color: #ffffffc2;
+    object-fit: cover;
+    border-radius: 60px;
+    margin:10px;
+    border: 2px solid transparent;
+    transition: border-color 0.3s ease;
+}
+
+.eliminar{
+    font-family: "Lilita One", sans-serif;
+    font-weight: 80;
+    font-size: 1.4rem;
+    font-style: normal;
+    color: #ffc2c2;
+    background-color: #b00e0eb4;
+    border-radius: 1rem;
+}
+.personajes {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+
+.avatar-label {
+    position: relative;
+    cursor: pointer;
+}
+
+.avatar-label input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+
+.avatar-label input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+
+.avatar-label:hover img {
+    border-color: #3f631fb4;
+}
+
+input[type="radio"]:checked + .avatar-label img {
+    border-color: #3f631fb4;
+}
+
+.contenido{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    text-align: center;
+}
