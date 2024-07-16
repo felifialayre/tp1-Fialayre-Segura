@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lilita+One&display=swap" rel="stylesheet">
+    <title>Falta Envido</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>🗡️Falta Envido🗡️</h1>
+        <h3>Tu página favorita para jugar al truco</h3>
+    </header>
+    <nav>
+       <a href="">Estadícas</a>
+       <a href="/points">Contador de Puntos</a>
+       <a href="">Reglas</a>
+    </nav>
+    <main>
+        <div class="botones">
+            <h3>Puntos Totales:</h3>
+            <button id="btn-15" onclick="jugar_a(15)">15</button>
+            <button id="btn-30" onclick="jugar_a(30)">30</button>
+        </div>
+        <div class="contenedor">
+            <div class="equipo">
+                <h2>Nosotros</h2>
+                <div class="puntos" id="puntos_nosotros"></div>
+                <div class="opciones">
+                    <button onclick="sumar_punto('nosotros')">+</button>
+                    <button onclick="restar_punto('nosotros')">-</button>
+                    <button onclick="resetear('nosotros')">↺</button>
+                </div>
+                
+            </div>
+            <div class="equipo">
+                <h2>Ellos</h2>
+                <div class="puntos" id="puntos_ellos"></div>
+                <div class="opciones">
+                    <button onclick="sumar_punto('ellos')">+</button>
+                    <button onclick="restar_punto('ellos')">-</button>
+                    <button onclick="resetear('ellos')">↺</button>
+                </div>
+                
+            </div> 
+        </div>
+        
+    </main>
+    <footer>
+        <a href="../" class="volver">Pagina Principal</a>
+    </footer>
+    <script>
+        let puntos_totales = 15;
+        const div_nosotros = document.getElementById('puntos_nosotros');
+        const div_ellos = document.getElementById('puntos_ellos');
+        const puntos = {
+            'nosotros': 0,
+            'ellos': 0
+        };
+
+        function jugar_a(puntos) {
+            puntos_totales = puntos;
+            actualizar_puntos();
+            document.getElementById('btn-15').classList.remove('active');
+            document.getElementById('btn-30').classList.remove('active');
+            if (puntos_totales === 15) {
+                document.getElementById('btn-15').classList.add('active');
+            } else if (puntos_totales === 30) {
+                document.getElementById('btn-30').classList.add('active');
+            }
+        }
+
+        function sumar_punto(equipo) {
+            if (puntos[equipo] < puntos_totales) {
+                puntos[equipo]++;
+                actualizar_puntos();
+            }
+        }
+
+        function restar_punto(equipo) {
+            if (puntos[equipo] > 0) {
+                puntos[equipo]--;
+                actualizar_puntos();
+            }
+        }
+
+        function resetear(equipo) {
+            puntos[equipo]=0;
+            actualizar_puntos();
+        }
+
+        function actualizar_puntos() {
+            const puntos_nosotros = '|'.repeat(puntos['nosotros']).replace(/(.{5})/g, '$1\n');
+            const puntos_ellos = '|'.repeat(puntos['ellos']).replace(/(.{5})/g, '$1\n');
+            document.getElementById('puntos_nosotros').innerHTML = puntos_nosotros.replace(/\n/g, '<br>');
+            document.getElementById('puntos_ellos').innerHTML = puntos_ellos.replace(/\n/g, '<br>');
+            if(puntos['nosotros'] === puntos_totales){
+                alert("Nosotros ganamos");
+            }
+            else if(puntos['ellos'] === puntos_totales){
+                alert("Ellos ganaron");
+            }
+        }
+    </script>
+</body>
+</html>

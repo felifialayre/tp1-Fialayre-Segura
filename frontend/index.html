@@ -16,7 +16,7 @@
     </header>
     <nav>
        <a href="">Estadícas</a>
-       <a href="">Contador de Puntos</a>
+       <a href="/points">Contador de Puntos</a>
        <a href="">Reglas</a>
     </nav>
     <p><h2>✦•······················•⚔•······················•✦ Jugadores ✦•······················•⚔•······················•✦</h2></p>
@@ -27,7 +27,7 @@
 
     </main>
     <footer>
-        <a href="/create">Añadir Jugador</a>
+        <a href="/create" class="crear">Añadir Jugador</a>
     </footer>
     <main></main>
 
@@ -66,7 +66,6 @@
     function handle_error(){
         console.log("bot")
     }
-
         fetch("http://localhost:5000/home")
             .then((res) => res.json())
             .then(parse_data)
