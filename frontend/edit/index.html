@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lilita+One&display=swap" rel="stylesheet">
+    <title>Falta Envido</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>🗡️Falta Envido🗡️</h1>
+        <h3>Tu página favorita para jugar al truco</h3>
+    </header>
+    <nav>
+       <a href="">Estadísticas</a>
+       <a href="">Contador de Puntos</a>
+       <a href="">Reglas</a>
+    </nav>
+    <h2>Nuevo Jugador</h2>
+    <main>
+        <form onsubmit="crear_personaje(event)">
+            <div class="tarjeta">
+                <div class="contenido">
+                    <div>
+                        <label for="nombre">Nombre y Apellido</label>
+                        <input type="text" id="nombre" name="nombre" placeholder="Juan Perez"required>
+                    </div>
+                    <div>
+                        <label for="apodo">Apodo</label>
+                        <input type="text" id="apodo" name="apodo" placeholder="El asesino de retrucos"required>
+                    </div>
+                    <div>
+                        <label for="edad" >Edad</label>
+                    <input type="number" id="edad" name="edad" placeholder="18"required>
+                    </div>
+                </div>
+                <div>
+                        <label> Avatar: </label>
+                            <div class="personajes">
+                                    <input value="1" type="radio" name="avatar" id="avatar-1" required hidden>
+                                    <label for="avatar-1" class="avatar-label">
+                                        <img class="imagenes"src="../../img/1.png" alt="personaje 1">
+                                    </label>
+                                    <input value="2" type="radio" name="avatar" id="avatar-2" required hidden>
+                                    <label for="avatar-2" class="avatar-label">
+                                        <img class="imagenes"src="../../img/2.png" alt="personaje 2">
+                                    </label>
+                                    <input value="3" type="radio" name="avatar" id="avatar-3" required hidden>
+                                    <label for="avatar-3" class="avatar-label">
+                                        <img class="imagenes"src="../../img/3.png" alt="personaje 3">
+                                    </label>
+                                    <input value="4" type="radio" name="avatar" id="avatar-4" required hidden>
+                                    <label for="avatar-4" class="avatar-label">
+                                        <img class="imagenes"src="../../img/4.png" alt="personaje 4">
+                                    </label>
+                                    <input value="5" type="radio" name="avatar" id="avatar-5" required hidden>
+                                    <label for="avatar-5" class="avatar-label">
+                                        <img class="imagenes"src="../../img/5.png" alt="personaje 5">
+                                    </label>
+                                    <input value="6" type="radio" name="avatar" id="avatar-6" required hidden>
+                                    <label for="avatar-6" class="avatar-label">
+                                        <img class="imagenes"src="../../img/6.png" alt="personaje 6">
+                                    </label>
+                                </div>
+            </div>
+                    <button type="submit">Editar</button>
+                       
+            </div>
+        </form>
+    </main>
+    <footer>
+    </footer>
+    <main></main>
+
+<script>
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get("id");
+
+    if (id === null) {
+        window.location.href = "/";
+    }    
+
+
+    function respuesta(data) {
+            if (data.mensaje) {
+                window.location.href = `../players/?id=${id}`;
+            } else {
+                alert("Error al crear el jugador");
+            }
+        }
+
+
+    function crear_personaje(event) {
+            event.preventDefault();
+
+            const data = new FormData(event.target);
+
+            const nombre = data.get("nombre");
+            const apodo = data.get("apodo");
+            const edad = data.get("edad");
+            const avatar = data.get("avatar");
+
+            fetch(`http://localhost:5000/edit/${id}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    nombre: nombre,
+                    apodo: apodo,
+                    edad: edad,
+                    avatar: avatar
+                })
+            })
+                .then((res) => res.json())
+                .then(respuesta)
+                .catch((error) => console.log("ERROR", error))
+        }
+
+    </script>
+
+</body>
+</html>

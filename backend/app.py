@@ -16,8 +16,8 @@ logging.basicConfig(level=logging.DEBUG)
 # Detalles de la conexion
 db_config = {
     'drivername': 'postgresql',
-    'username': 'juanasegura',
-    'password': 'juanasegura',
+    'username': 'felipefialayre',
+    'password': 'felipefialayre',
     'host': 'localhost',
     'port': '5432',
     'database': 'falta_envido'
@@ -88,7 +88,7 @@ def create_player():
 
 
 
-@app.route('/player/<player_id>')
+@app.route('/players/<player_id>')
 def return_player_by_id(player_id):
     jugador = db.session.query(Jugador).filter_by(id=player_id).first()
     return {
@@ -96,10 +96,58 @@ def return_player_by_id(player_id):
         'nombre' : jugador.nombre,
         'avatar' : jugador.avatar,
         'edad' : jugador.edad,
-        'ganadas' : jugador.edad,
+        'ganadas' : jugador.ganadas,
         'perdidas' : jugador.perdidas,
         'apodo' : jugador.apodo,
     }
+
+@app.route('/players/<player_id>', methods = ["DELETE"])
+def delete_character_by_id(player_id):
+    jugador = db.session.query(Jugador).filter_by(id=player_id).first()
+    if jugador is not None:
+       db.session.delete(jugador)
+       db.session.commit()
+       return jsonify({"message": True}), 200
+    else:
+       print(f"No se encontró ningún jugador con ID {player_id}.")
+       return jsonify({"message": False}), 500
+    
+    
+@app.route('/edit/<player_id>', methods = ["PUT"]) 
+def edit_character_by_id(player_id):
+    try:
+        
+        data = request.get_json()
+        
+        if not data:
+            return jsonify({"error": "El cuerpo de la solicitud debe ser JSON"}), 400
+        nombre = data.get('nombre')
+        apodo = data.get('apodo')
+        edad = data.get('edad')
+        avatar = data.get('avatar')
+            
+        jugador = Jugador.query.get(player_id)
+        
+        if not jugador:
+            return jsonify({"error": "Jugador no encontrado"}), 404
+           
+        if nombre is not None:
+            jugador.nombre = nombre
+        if apodo is not None:
+            jugador.apodo = apodo
+        if edad is not None:
+            jugador.edad = edad
+        if avatar is not None:
+            jugador.avatar = avatar
+
+        db.session.commit()
+        
+        return jsonify({"mensaje" : True})
+
+    except Exception as e:
+        logging.error(f"Error creating player: {e}")
+        return jsonify({'message': False}), 500
+
 
 if __name__ == '__main__':
     logging.debug('Starting server...')

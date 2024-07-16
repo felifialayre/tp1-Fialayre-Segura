@@ -40,21 +40,16 @@
             
             const tarjeta = document.createElement("a");
             tarjeta.setAttribute("class", "tarjeta");
-            tarjeta.setAttribute("href", `/player?id=${data[i].id}`);
+            tarjeta.setAttribute("href", `/players?id=${data[i].id}`);
 
             const imagen = document.createElement("img");
             imagen.setAttribute("class", "imagenes");
             imagen.setAttribute("src", `img/${data[i].avatar}.png`);
 
-            const boton_eliminar = document.createElement("button");
-            boton_eliminar.setAttribute("class", "eliminar");
-            boton_eliminar.textContent = "Eliminar";
-
             const cuerpo = document.createElement("div");
             cuerpo.setAttribute("class", "cuerpo");
             cuerpo.append(imagen);
             cuerpo.append(data[i].nombre);
-            cuerpo.append(boton_eliminar);
             
             tarjeta.append(cuerpo);
 
