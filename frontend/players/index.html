@@ -16,7 +16,7 @@
     </header>
     <nav>
        <a href="">Estadísticas</a>
-       <a href="">Contador de Puntos</a>
+       <a href="../points">Contador de Puntos</a>
        <a href="">Reglas</a>
     </nav>
     <p></p>
@@ -33,7 +33,46 @@
                     </ul>
                 </div>
             </div>
+            <div class="izquierda">
+                <div class="partidas" id="partidas">
+                    <h3>Partidas</h3>
+                    <ul id="lista_partidas">
+                
+                    </ul>
+                </div>
+                <div class="agregar">
+                    <h3>Agregar Partida</h3>
+                    <form onsubmit="agregar_partida(event)">
+                        <label for="flor">Flor</label>
+                        <select name="flor" id="flor">
+                            <option value="true">con</option>
+                            <option value="false">sin</option>
+                        </select>
 
+                        <label for="jugadores">Cantidad de Jugadores</label>
+                        <select name="jugadores" id="jugadores">
+                            <option value="2">2</option>
+                            <option value="4">4</option>
+                            <option value="6">6</option>
+                        </select>
+
+                        <label for="puntos">Puntos</label>
+                        <select name="puntos" id="puntos">
+                            <option value="15">15</option>
+                            <option value="30">30</option>
+                        </select>
+
+                        <label for="resultado">Resultado</label>
+                        <select name="resultado" id="resultado">
+                            <option value="true">gané</option>
+                            <option value="false">perdí</option>
+                        </select>
+
+                        <button type="submit">Agregar Partida</button>
+                    </form>
+                </div>    
+            </div>
+            
         </div>
     </main>
     <footer>
@@ -102,6 +141,33 @@
             .then(parse_data)
             .catch(handle_error)
 
+        function parse_partidas(partidas) {
+            const listaPartidas = document.getElementById("lista_partidas");
+            partidas.forEach(partida => {
+                const item = document.createElement("li");
+                item.innerText = `Jugadores: ${partida.cant_jugadores}, Flor: ${partida.flor ? 'Sí' : 'No'}, Puntos: ${partida.max_puntos}, Fecha: ${new Date(partida.fecha_creacion).toLocaleDateString()}`;
+                
+                const eliminar = document.createElement("button");
+                eliminar.setAttribute("class","eliminar");
+                eliminar.innerText = "borrar partida";
+                item.append(eliminar);
+                
+                listaPartidas.appendChild(item);
+                if(partida.ganada){
+                    item.setAttribute("class","ganada");
+                }
+                else{
+                    item.setAttribute("class","perdida");
+                }
+            });
+        }
+
+        fetch(`http://localhost:5000/players/${id}/partidas`)
+            .then((res) => res.json())
+            .then(parse_partidas)
+            .catch(handle_error);    
+
+
         function eliminar(){
             const conf = confirm(`Seguro que deseas eliminar al jugador?`);
             if (!conf){
@@ -123,5 +189,101 @@
                 alert("Ocurrio un error eliminando al jugador")
             }
         }
+
+
+        function agregar_partida(event) {
+            event.preventDefault();
+
+            const formData = new FormData(event.target);
+            const flor = formData.get('flor') === 'true';
+            const jugadores = parseInt(formData.get('jugadores'));
+            const puntos = parseInt(formData.get('puntos'));
+            const resultado = formData.get('resultado') === 'true';
+
+            const tipoPartidaId = determinarTipoPartida(flor, jugadores, puntos);
+
+            if (!tipoPartidaId) {
+                console.error('No se pudo determinar el tipo de partida');
+                return;
+            }
+
+            try {
+                fetch(`http://localhost:5000/players/${id}/partidas`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        tipo_partida_id: tipoPartidaId,
+                        resultado: resultado
+                    }),
+                })
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error('Error al agregar la partida');
+                    }
+                    return response.json();
+                })
+                .then((data) => {
+                    alert('Partida agregada correctamente');
+                    window.location.reload();
+                })
+                .catch((error) => {
+                    console.error('Error en la operación:', error);
+                    alert('Error al agregar la partida');
+                });
+            } catch (error) {
+                console.error('Error en la operación:', error);
+                alert('Error al agregar la partida');
+            }
+        }
+
+
+        function determinarTipoPartida(flor, jugadores, puntos) {
+            let tipo_partida_id = null;
+            if (flor) {
+                if (jugadores === 2) {
+                    if (puntos === 15) {
+                        tipo_partida_id = 1;
+                    } else if (puntos === 30) {
+                        tipo_partida_id = 2; 
+                    }
+                } else if (jugadores === 4) {
+                    if (puntos === 15) {
+                        tipo_partida_id = 5; 
+                    } else if (puntos === 30) {
+                        tipo_partida_id = 6;
+                    }
+                } else if (jugadores === 6) {
+                    if (puntos === 15) {
+                        tipo_partida_id = 9; 
+                    } else if (puntos === 30) {
+                        tipo_partida_id = 10; 
+                    }
+                }
+            } else {
+                if (jugadores === 2) {
+                    if (puntos === 15) {
+                        tipo_partida_id = 3;
+                    } else if (puntos === 30) {
+                        tipo_partida_id = 4; 
+                    }
+                } else if (jugadores === 4) {
+                    if (puntos === 15) {
+                        tipo_partida_id = 7;
+                    } else if (puntos === 30) {
+                        tipo_partida_id = 8;
+                    }
+                } else if (jugadores === 6) {
+                    if (puntos === 15) {
+                        tipo_partida_id = 11;
+                    } else if (puntos === 30) {
+                        tipo_partida_id = 12;
+                    }
+                }
+            }
+            return(tipo_partida_id);
+        }
+
 
     </script>

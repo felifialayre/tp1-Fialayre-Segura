@@ -16,8 +16,8 @@ logging.basicConfig(level=logging.DEBUG)
 # Detalles de la conexion
 db_config = {
     'drivername': 'postgresql',
-    'username': 'felipefialayre',
-    'password': 'felipefialayre',
+    'username': 'juanasegura',
+    'password': 'juanasegura',
     'host': 'localhost',
     'port': '5432',
     'database': 'falta_envido'
@@ -57,8 +57,12 @@ def create_player():
         apodo = data.get('apodo')
         edad = data.get('edad')
         avatar = data.get('avatar')
+
+        ultimo_jugador = db.session.query(Jugador).order_by(Jugador.id.desc()).first()
+        nuevo_id = 1 if ultimo_jugador is None else ultimo_jugador.id + 1
         
         nuevo_jugador = Jugador(
+            id=nuevo_id,
             nombre=nombre, 
             apodo=apodo, 
             edad=edad, 
@@ -148,6 +152,59 @@ def edit_character_by_id(player_id):
         logging.error(f"Error creating player: {e}")
         return jsonify({'message': False}), 500
 
+@app.route('/players/<player_id>/partidas')
+def get_partidas_by_player_id(player_id):
+    try:
+        partidas = db.session.query(Partida, TipoPartida).join(TipoPartida).filter(Partida.jugador_id == player_id).all()
+        if not partidas:
+            return jsonify({"message": "No se encontraron partidas"}), 404
+        
+        partidas_list = [
+            {
+                'id': partida.Partida.id,
+                'tipo_partida_id': partida.Partida.tipo_partida_id,
+                'cant_jugadores': partida.TipoPartida.cant_jugadores,
+                'flor': partida.TipoPartida.flor,
+                'max_puntos': partida.TipoPartida.max_puntos,
+                'ganada': partida.Partida.ganada,
+                'fecha_creacion': partida.Partida.fecha_creacion
+            }
+            for partida in partidas
+        ]
+        return jsonify(partidas_list)
+    except Exception as e:
+        logging.error(f"Error al buscar partidas para el jugador {player_id}: {e}")
+        return jsonify({"message": "Error al buscar partidas"}), 500
+
+@app.route('/players/<int:player_id>/partidas', methods=['POST'])
+def agregar_partida(player_id):
+    try:
+        data = request.get_json()
+        tipo_partida_id = data.get('tipo_partida_id')
+        resultado = data.get('resultado')
+
+        nueva_partida = Partida(
+            jugador_id=player_id,
+            tipo_partida_id=tipo_partida_id,
+            ganada=resultado,
+            fecha_creacion=datetime.datetime.now()
+        )
+
+        db.session.add(nueva_partida)
+
+        jugador = db.session.query(Jugador).filter_by(id=player_id).first()
+        if resultado:
+            jugador.ganadas += 1
+        else:
+            jugador.perdidas += 1
+
+        db.session.commit()
+
+        return jsonify({"message": "Partida agregada correctamente"}), 201
+
+    except Exception as e:
+        logging.error(f"Error al agregar partida para el jugador {player_id}: {e}")
+        return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
     logging.debug('Starting server...')

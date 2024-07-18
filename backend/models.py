@@ -18,13 +18,15 @@ class TipoPartida (db.Model):
     __tablename__='tipos_partida'
     id = db.Column(db.Integer, primary_key=True)
     cant_jugadores = db.Column (db.Integer, nullable=False)
-    apodo = db.Column(db.Boolean, default = False)
+    flor = db.Column(db.Boolean, default = False)
     max_puntos = db.Column (db.Integer, nullable=False)
     fecha_creacion = db.Column(db.DateTime, default=datetime.datetime.now())
 
-class Partida (db.Model):
+class Partida(db.Model):
     __tablename__ = 'partidas'
     id = db.Column(db.Integer, primary_key=True)
-    tipo_partida_id = db.Column (db.Integer, db.ForeignKey('tipos_partida.id'))
-    jugador_id = db.Column (db.Integer, db.ForeignKey('tipos_partida.id'))
+    tipo_partida_id = db.Column(db.Integer, db.ForeignKey('tipos_partida.id'))
+    jugador_id = db.Column(db.Integer, db.ForeignKey('jugadores.id'))
     fecha_creacion = db.Column(db.DateTime, default=datetime.datetime.now())
+    ganada = db.Column(db.Boolean, default = False)
+
