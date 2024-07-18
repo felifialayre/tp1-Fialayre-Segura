@@ -92,9 +92,14 @@ button, footer a{
 
 .contenedor {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 4fr;
     gap: 1rem;
     padding: 1rem;
+}
+
+.izquierda{
+    display: grid;
+    grid-template-rows: 3fr 1fr;
 }
 
 .tarjeta {
@@ -108,6 +113,30 @@ button, footer a{
     text-decoration: none;
     color: inherit;
 }
+
+.partidas{
+    align-items: center;
+    display: inline-block;
+    background-color: rgba(255, 255, 255, 0.313);
+    padding: 20px;
+    margin: 30px;
+    margin-top: 0%;
+    border-radius: 1rem;
+    font-family: "Lilita One", sans-serif;
+    font-size: 1.25rem;
+    align-items: center;
+    color: #135b13;
+    display: flex;
+    flex-direction: column;
+}
+
+.partidas li{
+    padding: 0.4em;
+    border: 0.2em black solid;
+    border-radius: 1rem;
+    margin: 7px;
+}
+
 .cuerpo {
     font-family: "Lilita One", sans-serif;
     font-size: 1.25rem;
@@ -127,11 +156,21 @@ button, footer a{
 
 .eliminar{
     font-family: "Lilita One", sans-serif;
-    font-weight: 80;
-    font-size: 1.4rem;
+    font-weight: 70;
+    font-size: 1rem;
     font-style: normal;
     color: #ffc2c2;
-    background-color: #b00e0eb4;
+    background-color: #c21b1bb4;
+    border-radius: 1rem;
+}
+
+.eliminar:hover{
+    font-family: "Lilita One", sans-serif;
+    font-weight: 70;
+    font-size: 1rem;
+    font-style: normal;
+    color: #c21b1bb4;
+    background-color: #ffc2c2;
     border-radius: 1rem;
 }
 
@@ -144,7 +183,7 @@ button, footer a{
     flex-direction: column;
 }
 
-ul {
+.tarjeta ul {
     padding: 0.4em;
     border: 0.2em black solid;
     border-radius: 1rem;
@@ -162,6 +201,75 @@ a{
     color: #c1ce15;
 }
 
+#editar:hover{
+    background-color: rgb(116, 128, 10);
+}
+
 #eliminar{
     color: red;
+}
+
+#eliminar:hover{
+    background-color: rgb(114, 0, 0);
+}
+
+.ganada{
+    background-color: #00ff2f6f;
+}
+
+.perdida{
+    background-color: #ff020263;
+}
+
+form{
+    background-color: rgba(36, 107, 27, 0.808);
+    padding: 0.4em;
+    border: 0.2em rgb(180, 255, 176) solid;
+    border-radius: 1rem;
+    margin: 30px;
+    margin-bottom: 0px;
+}
+
+form button{
+    font-family: "Lilita One", sans-serif;
+    padding: 0.4em;
+    font-weight: 200;
+    font-size: 1.4rem;
+    text-align: center;
+    font-style: normal;
+    color: #b9f3ac;
+    background-color: #114808;
+    margin: 10px;
+    margin-left: 40px;
+    border-radius: 1rem;
+}
+
+form button:hover{
+    background-color: #c8ffbc;
+    color: #114808;
+}
+
+label{
+    font-family: "Lilita One", sans-serif;
+    font-weight: 200;
+    font-size: 1.75rem;
+    text-align: center;
+    font-style: normal;
+    color: #092205;
+    margin: 10px;
+    margin-top: 0%;
+    margin-bottom: 0%;
+}
+
+select{
+    font-family: "Lilita One", sans-serif;
+    font-weight: 200;
+    font-size: 1.5rem;
+    text-align: center;
+    font-style: normal;
+    color: #0e260a;
+    margin: 10px;
+    margin-top: 0%;
+    margin-bottom: 0%;
+    border-radius: 10%;
 }
