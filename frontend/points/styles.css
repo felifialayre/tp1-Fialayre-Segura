@@ -28,6 +28,7 @@ nav a{
     color: #dcfde9;
     margin: 10px;
     border-radius: 1rem;
+    text-decoration: none;
 }
 
 footer{
@@ -164,4 +165,8 @@ main{
     font-family: "Lilita One", sans-serif;
     font-weight: 200;
     font-size: 1.4rem;
+}
+
+#pp {
+    text-decoration: underline;
 }

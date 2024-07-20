@@ -15,13 +15,13 @@
         <h3>Tu página favorita para jugar al truco</h3>
     </header>
     <nav>
-       <a href="">Estadísticas</a>
-       <a href="">Contador de Puntos</a>
-       <a href="">Reglas</a>
+        <a href="/" id="pp">Pagina principal</a>
+       <a href="../points">Contador de Puntos</a>
+       <a href="../reglas">Reglas</a>
     </nav>
-    <h2>Nuevo Jugador</h2>
+    <h2>Editar Jugador</h2>
     <main>
-        <form onsubmit="crear_personaje(event)">
+        <form onsubmit="editar_personaje(event)">
             <div class="tarjeta">
                 <div class="contenido">
                     <div>
@@ -83,6 +83,22 @@
         window.location.href = "/";
     }    
 
+    function parse_form_data(data){
+        document.getElementById("nombre").value = data.nombre
+        document.getElementById("apodo").value = data.apodo
+        document.getElementById("edad").value = data.edad
+        document.getElementById(`avatar-${data.avatar}`).setAttribute("checked", "checked")
+    }
+
+    function handle_error(){
+        console.log("bot")
+    }
+
+    fetch(`http://localhost:5000/players/${id}`)
+            .then((res) => res.json())
+            .then(parse_form_data)
+            .catch(handle_error)
+
 
     function respuesta(data) {
             if (data.mensaje) {
@@ -93,7 +109,7 @@
         }
 
 
-    function crear_personaje(event) {
+    function editar_personaje(event) {
             event.preventDefault();
 
             const data = new FormData(event.target);

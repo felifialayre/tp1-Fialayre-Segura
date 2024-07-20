@@ -15,8 +15,9 @@
         <h3>Tu página favorita para jugar al truco</h3>
     </header>
     <nav>
+       <a href="/" id="pp">Pagina principal</a>
        <a href="../points">Contador de Puntos</a>
-       <a href="">Reglas</a>
+       <a href="../reglas">Reglas</a>
     </nav>
     <p></p>
     <main>
@@ -40,7 +41,7 @@
                     </ul>
                 </div>
                 <div class="agregar">
-                    <h3>Agregar Partida</h3>
+                    <h3>Nueva Partida</h3>
                     <form onsubmit="agregar_partida(event)">
                         <label for="flor">Flor</label>
                         <select name="flor" id="flor">
@@ -75,7 +76,6 @@
         </div>
     </main>
     <footer>
-        <a href="../" class="volver">Pagina Principal</a>
         <a href="edit/" id="editar">Editar</a>
         <button class="button" id="eliminar" onclick="eliminar()">Eliminar</button>
     </footer>
@@ -148,7 +148,7 @@
                 
                 const eliminar = document.createElement("button");
                 eliminar.setAttribute("class","eliminar");
-                eliminar.innerText = "borrar partida";
+                eliminar.innerText = "Borrar partida";
                 eliminar.setAttribute("onclick", `eliminarPartida(${partida.id})`);
                 item.append(eliminar);
                 
