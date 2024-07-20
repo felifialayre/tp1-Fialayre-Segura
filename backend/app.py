@@ -109,6 +109,7 @@ def return_player_by_id(player_id):
 def delete_character_by_id(player_id):
     jugador = db.session.query(Jugador).filter_by(id=player_id).first()
     if jugador is not None:
+       Partida.query.filter_by(jugador_id=player_id).delete()
        db.session.delete(jugador)
        db.session.commit()
        return jsonify({"message": True}), 200
@@ -183,7 +184,11 @@ def agregar_partida(player_id):
         tipo_partida_id = data.get('tipo_partida_id')
         resultado = data.get('resultado')
 
+        ultima_partida = db.session.query(Partida).order_by(Partida.id.desc()).first()
+        nuevo_id = 1 if ultima_partida is None else ultima_partida.id + 1
+
         nueva_partida = Partida(
+            id=nuevo_id,  
             jugador_id=player_id,
             tipo_partida_id=tipo_partida_id,
             ganada=resultado,
@@ -205,6 +210,29 @@ def agregar_partida(player_id):
     except Exception as e:
         logging.error(f"Error al agregar partida para el jugador {player_id}: {e}")
         return jsonify({"error": str(e)}), 500
+ 
+@app.route('/partidas/<int:partida_id>', methods=['DELETE'])
+def delete_partida_by_id(partida_id):
+    try:
+        partida = db.session.query(Partida).filter_by(id=partida_id).first()
+        if not partida:
+            return jsonify({"message": "Partida no encontrada"}), 404
+        
+        jugador = db.session.query(Jugador).filter_by(id=partida.jugador_id).first()
+        if partida.ganada:
+            jugador.ganadas -= 1
+        else:
+            jugador.perdidas -= 1
+
+        db.session.delete(partida)
+        db.session.commit()
+        return jsonify({"message": True}), 200
+    
+    except Exception as e:
+        logging.error(f"Error al eliminar partida: {e}")
+        return jsonify({"message": "Error al eliminar partida"}), 500
+
+
 
 if __name__ == '__main__':
     logging.debug('Starting server...')
