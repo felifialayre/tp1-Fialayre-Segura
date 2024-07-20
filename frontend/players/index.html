@@ -15,7 +15,6 @@
         <h3>Tu página favorita para jugar al truco</h3>
     </header>
     <nav>
-       <a href="">Estadísticas</a>
        <a href="../points">Contador de Puntos</a>
        <a href="">Reglas</a>
     </nav>
@@ -150,6 +149,7 @@
                 const eliminar = document.createElement("button");
                 eliminar.setAttribute("class","eliminar");
                 eliminar.innerText = "borrar partida";
+                eliminar.setAttribute("onclick", `eliminarPartida(${partida.id})`);
                 item.append(eliminar);
                 
                 listaPartidas.appendChild(item);
@@ -284,6 +284,30 @@
             }
             return(tipo_partida_id);
         }
+
+        function eliminarPartida(partidaId) {
+            if (confirm('¿Eliminar esta partida?')) {
+                fetch(`http://localhost:5000/partidas/${partidaId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            })
+                .then(response => {
+                    if (response.ok) {
+                    alert('Partida eliminada correctamente');
+                    window.location.reload();
+                } else {
+                    alert('Error al eliminar la partida');
+                }   
+            })
+                .catch(error => {
+                    console.error('Error en la operación:', error);
+                    alert('Error al eliminar la partida');
+            });
+    }
+}
+
 
 
     </script>
