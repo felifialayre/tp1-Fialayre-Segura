@@ -44,6 +44,7 @@ h2{
     font-style: normal;
     color: #3e7036;
     margin: 0%;
+    margin-bottom: 20px;
     margin-top: 20px;
 }
 
@@ -58,6 +59,40 @@ h3{
     margin-top: 0%;
     margin-bottom: 0%;
 }
+
+
+p{
+    font-family: sans-serif;
+    font-weight: 100;
+    font-size: 1.2rem;
+    text-align:justify;
+    font-style: normal;
+    color: #173812;
+    background-color: #d5fecf;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 20px;
+}
+
+.enumerado{
+    text-align: center;
+}
+
+table{
+    font-family: sans-serif;
+    font-weight: 100;
+    font-size: 1.2rem;
+    text-align:center;
+    font-style: normal;
+    color: #173812;
+    background-color: #d5fecf;
+    border: 2px #0b2c06 solid;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 30px;
+}
+
+
 
 nav{
     background-color: #1b4515ad;

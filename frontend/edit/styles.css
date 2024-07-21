@@ -197,7 +197,3 @@ input[type="radio"]:checked + .avatar-label img {
     grid-template-columns: 1fr 1fr 1fr;
     text-align: center;
 }
-
-#pp {
-    text-decoration: underline;
-}

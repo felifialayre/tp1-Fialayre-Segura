@@ -16,8 +16,8 @@ logging.basicConfig(level=logging.DEBUG)
 # Detalles de la conexion
 db_config = {
     'drivername': 'postgresql',
-    'username': 'felipefialayre',
-    'password': 'felipefialayre',
+    'username': 'juanasegura',
+    'password': 'juanasegura',
     'host': 'localhost',
     'port': '5432',
     'database': 'falta_envido'
